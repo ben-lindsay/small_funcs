@@ -8,6 +8,4 @@ for f in Hooks/*; do
     fi
 done
 
-for f in *.sh; do
-  cp -v $f $HOME/bin/
-done
+cp -v *.sh $HOME/bin/
