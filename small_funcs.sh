@@ -6,36 +6,43 @@
 # It allows you to evaluate and round math expressions with
 # floating point numbers
 round () {
-    # Make sure only 1 or 2 variables passed
-    if [ "$#" -gt 2 ] || [ "$#" == 0 ] ; then
-        echo 'Usage: round "expr" scale. Default scale is 0'
-        return 1
-    elif [ "$#" == 1 ] ; then
-        # If no scale was passed, set scale to 0
-        set -- "${@:1}" "0"
-    fi
+  # Make sure only 1 or 2 variables passed
+  if [ "$#" -gt 2 ] || [ "$#" == 0 ] ; then
+    echo 'Usage: round "expr" scale. Default scale is 0'
+    return 1
+  elif [ "$#" == 1 ] ; then
+    # If no scale was passed, set scale to 0
+    set -- "${@:1}" "0"
+  fi
 
-    # Make sure scale >= 0
-    if [ "$2" -lt 0 ] ; then
-        echo "Scale must be >= 0"
-        return 1
-    fi
+  # Make sure scale >= 0
+  if [ "$2" -lt 0 ] ; then
+    echo "Scale must be >= 0"
+    return 1
+  fi
 
-    # Evaluate
-    if [ "$2" == 0 ] ; then
-        echo $(printf %.0f $(echo "scale=0;($1+0.5)/1" | bc))
-    else
-        echo $(printf %.$2f $(echo "scale=$2;(((10^$2)*($1))+0.5)/(10^$2)" | bc))
-    fi
+  # Evaluate
+  if [ "$2" == 0 ] ; then
+    echo $(printf %.0f $(echo "scale=0;($1+0.5)/1" | bc))
+  else
+    echo $(printf %.$2f $(echo "scale=$2;(((10^$2)*($1))+0.5)/(10^$2)" | bc))
+  fi
 }
 
 # Shortcut for executing a command within each subdirectory
 all () {
-    for d in */; do
-        cd $d
-        ("$1")
-        cd ../
-    done
+  for d in */; do
+    cd $d
+    ("$1")
+    cd ../
+  done
+}
+
+# Changes all files in current directory of the form w*.all to w*.res
+w_all_to_res () {
+  for f in w*.all; do
+    mv $f ${f%.all}.res
+  done
 }
 
 # Shortcut for (git add *; git commit -m "message"; git push origin master)
