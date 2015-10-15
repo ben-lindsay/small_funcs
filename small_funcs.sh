@@ -1,5 +1,5 @@
 # Contains small functions sourced by ~/.bashrc
-# Contents as of September 2015: round, bkp, wscp, extract
+# Contents as of October 2015: round, all, w_all_to_res, gu, bkp, wscp, extract
 
 # "round()" was modified from 
 # http://stempell.com/2009/08/rechnen-in-bash/
